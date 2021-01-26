@@ -1,28 +1,6 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        sample
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <NuxtLink
-          rel="noopener noreferrer"
-          class="button--grey"
-          to="/sample"
-        >
-          GitHub
-        </NuxtLink>
-      </div>
-    </div>
+  <div>
+    <h2 v-text="isEdit ? 'SAMPLE FORM EDIT' : 'SAMPLE FORM DETAIL'" />
   </div>
 </template>
 
@@ -32,45 +10,32 @@ import {mapState} from 'vuex'
 export default {
   components: {
   },
+  props: {
+    isEdit: Boolean
+  },
   computed: {
     ...mapState("sample", [
-      "list",
-      "detail"
+      "detail",
     ]),
   },
   data() {
     return {
-      listArray: [],
-      detailObject: {}
+      id: '',
+      data: {}
     }
   },
   fetch() {
-    this.getList()
-    this.getDetail()
+    this.id = this.$route.params.id
+
+    if(this.$route.params.id !== 'add') {
+      this.$store.dispatch('sample/getDetail', {
+        id: this.$route.params.id
+      })
+    }
   },
   mounted() {
   },
   methods: {
-    getList() {
-      const params = {
-        page: 1,
-        limit: 20
-      }
-      this.$store.dispatch('sample/getList', params)
-      .then(() => {
-      })
-      .catch((error) => {
-      })
-    },
-    getDetail() {
-      this.$store.dispatch('sample/getDetail', {
-        id: 'id'
-      })
-      .then(() => {
-      })
-      .catch((error) => {
-      })
-    },
     create() {
       const payload = {
         name: 'Name',
@@ -95,23 +60,10 @@ export default {
       .catch((error) => {
       })
     },
-    delete() {
-      const data = {
-        id: 'id',
-      }
-      this.$store.dispatch('sample/update', data)
-      .then(() => {
-      })
-      .catch((error) => {
-      })
-    }
   },
   watch: {
-    list(newState) {
-      this.listArray = newState
-    },
     detail(newState) {
-      this.detailObject = newState
+      this.data = newState
     }
   },
   filters: {

@@ -1,27 +1,9 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
-      <h1 class="title">
-        sample
+      <h1>
+        SAMPLE
       </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <NuxtLink
-          rel="noopener noreferrer"
-          class="button--grey"
-          to="/sample"
-        >
-          GitHub
-        </NuxtLink>
-      </div>
     </div>
   </div>
 </template>
@@ -35,18 +17,15 @@ export default {
   computed: {
     ...mapState("sample", [
       "list",
-      "detail"
     ]),
   },
   data() {
     return {
-      listArray: [],
-      detailObject: {}
+      data: []
     }
   },
   fetch() {
     this.getList()
-    this.getDetail()
   },
   mounted() {
   },
@@ -57,39 +36,6 @@ export default {
         limit: 20
       }
       this.$store.dispatch('sample/getList', params)
-      .then(() => {
-      })
-      .catch((error) => {
-      })
-    },
-    getDetail() {
-      this.$store.dispatch('sample/getDetail', {
-        id: 'id'
-      })
-      .then(() => {
-      })
-      .catch((error) => {
-      })
-    },
-    create() {
-      const payload = {
-        name: 'Name',
-      }
-
-      this.$store.dispatch('sample/create', payload)
-      .then(() => {
-      })
-      .catch((error) => {
-      })
-    },
-    update() {
-      const data = {
-        id: this.data.id,
-        payload: {
-          name: 'Name Update',
-        }
-      }
-      this.$store.dispatch('sample/update', data)
       .then(() => {
       })
       .catch((error) => {
@@ -108,10 +54,7 @@ export default {
   },
   watch: {
     list(newState) {
-      this.listArray = newState
-    },
-    detail(newState) {
-      this.detailObject = newState
+      this.data = newState
     }
   },
   filters: {

@@ -2,8 +2,10 @@ export default {
   // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
   env: {
+    appName: process.env.APP_NAME || 'BASE',
+    appVersion: '1.0.0',
+    buildNumber: 'yymmddhhmm',
     baseUrl: process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:3000',
-    // baseUrlV1: process.env.BASE_URL_V1,
   },
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -42,7 +44,14 @@ export default {
   ],
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
+  axios: {
+    baseURL: process.env.BASE_URL,
+    headers: {
+      common: {
+        'Version': process.env.WEB_VERSION
+      }
+    }
+  },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

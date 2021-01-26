@@ -54,7 +54,9 @@ export default {
           // throw new Error(e.response)
           return Promise.reject(e)
         }
-      },
+      }, 
+    },
+    getters: {
       
     }
   }
